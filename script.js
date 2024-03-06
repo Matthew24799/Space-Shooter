@@ -8,7 +8,7 @@ const ctx = canvas.getContext("2d");
     let leftPressed = false;
    let asteroidRadius = 10;
     let asteroidSpeed = 5;
-    let spawnInterval = 2000;
+    let spawnInterval = 1000;
     
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
@@ -43,7 +43,7 @@ const ctx = canvas.getContext("2d");
         
     
       
-      ctx.strokeRect(playerX, 830, playerWidth, playerHeight);
+     const player = ctx.strokeRect(playerX, 830, playerWidth, playerHeight);
        ctx.stroke();
       ctx.strokeStyle = "white";
     };
