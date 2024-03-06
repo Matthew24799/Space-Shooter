@@ -16,7 +16,7 @@ const ctx = canvas.getContext("2d");
     
     score = document.querySelector("#score");
     let currentScore = 0;
-    score.textContent = `Score: ${currentScore}`
+    score.textContent = `Score: ${currentScore}`;
    
     
     
@@ -57,10 +57,10 @@ const ctx = canvas.getContext("2d");
           bullets.splice(bulletIndex,1);
           asteroids.splice(asteroidIndex,1);
           if (lives > 0) {
-          currentScore++
-          score.textContent = `Score: ${currentScore}`
-          console.log(currentScore)
-          }
+          currentScore++;
+          score.textContent = `Score: ${currentScore}`;
+          console.log(currentScore);
+          };
         }
       })
     })
@@ -129,7 +129,7 @@ const ctx = canvas.getContext("2d");
         asteroid.y += asteroidSpeed;
 
        // Check collision with player
-       if (lives > 0) {
+      
        const distanceX = playerX + playerWidth / 2 - asteroid.x;
        const distanceY = canvas.height - playerHeight / 2 - asteroid.y;
        const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
@@ -140,7 +140,7 @@ const ctx = canvas.getContext("2d");
            lives--
            console.log(`HIT: ${lives}`);
        }
-      };
+      
 
       
     });       
