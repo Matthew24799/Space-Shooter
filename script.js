@@ -9,7 +9,7 @@ const ctx = canvas.getContext("2d");
    let asteroidRadius = 10;
     let asteroidSpeed = 5;
     let spawnInterval = 1000;
-    
+    let lives = 3;
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
 
@@ -31,6 +31,12 @@ const ctx = canvas.getContext("2d");
           }
   };
 
+
+  function bullet() {
+    ctx.rect(10, 20, 150, 100);
+    
+  }
+ 
     function spawnAsteroid() {
       let asteroidX = Math.random() * canvas.width;
       let asteroidY = 0;
@@ -40,12 +46,11 @@ const ctx = canvas.getContext("2d");
     
 
     function drawPlayer () { 
-        
-    
-      
-     const player = ctx.strokeRect(playerX, 830, playerWidth, playerHeight);
-       ctx.stroke();
+      if (lives > 0) {
+      ctx.strokeRect(playerX, 830, playerWidth, playerHeight);
+      ctx.stroke();
       ctx.strokeStyle = "white";
+      }
     };
 
     function drawAsteroids() {
@@ -61,20 +66,26 @@ const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPlayer();
     drawAsteroids();
-
+    bullet();
     
-    asteroids.forEach(asteroid => {
+    asteroids.forEach((asteroid, index) => {
         asteroid.y += asteroidSpeed;
 
-        
-        if (
-            asteroid.y + asteroidRadius > canvas.height - playerHeight && 
-            asteroid.x > playerX && 
-            asteroid.x < playerX + playerWidth
-        ) {
-            
-            asteroids.splice(asteroids.indexOf(asteroid), 1);
-        }
+       // Check collision with player
+       if (lives > 0) {
+       const distanceX = playerX + playerWidth / 2 - asteroid.x;
+       const distanceY = canvas.height - playerHeight / 2 - asteroid.y;
+       const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+
+       if (distance < asteroidRadius + playerHeight / 2) {
+            // Removes Asteroid from array
+           asteroids.splice(index, 1);
+           lives--
+           console.log(`HIT: ${lives}`);
+       }
+      };
+
+      
     });       
 
      
