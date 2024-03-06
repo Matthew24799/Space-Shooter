@@ -1,5 +1,6 @@
 const canvas = document.querySelector("#playArea");
 const ctx = canvas.getContext("2d");
+
     let asteroids = [];
     let bullets = [];
     const playerHeight = 45;
@@ -9,9 +10,16 @@ const ctx = canvas.getContext("2d");
     let leftPressed = false;
     let asteroidRadius = 10;
     let asteroidSpeed = 5;
-    let spawnInterval = 1000;
-     
+    let spawnInterval = 1000; 
     let lives = 3;
+
+    
+    score = document.querySelector("#score");
+    let currentScore = 0;
+    score.textContent = `Score: ${currentScore}`
+   
+    
+    
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
 
@@ -38,6 +46,25 @@ const ctx = canvas.getContext("2d");
           }
   };
 
+
+  function detectCollision() {
+    bullets.forEach((bullet, bulletIndex) => {
+      asteroids.forEach((asteroid, asteroidIndex) => {
+        const distanceX = bullet.x - asteroid.x;
+        const distanceY = bullet.y - asteroid.y;
+        const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+        if ( distance < asteroidRadius + 5) {
+          bullets.splice(bulletIndex,1);
+          asteroids.splice(asteroidIndex,1);
+          if (lives > 0) {
+          currentScore++
+          score.textContent = `Score: ${currentScore}`
+          console.log(currentScore)
+          }
+        }
+      })
+    })
+  };
 
   function drawBullet() {
     bullets.forEach(bullet => {
@@ -83,6 +110,9 @@ const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPlayer();
     drawAsteroids();
+    detectCollision();
+
+
 
     if (lives > 0) {
     drawBullet();
