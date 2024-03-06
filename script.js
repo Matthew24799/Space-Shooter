@@ -11,14 +11,14 @@ const ctx = canvas.getContext("2d");
     let asteroidRadius = 10;
     let asteroidSpeed = 5;
     let spawnInterval = 1000; 
-    let lives = 3;
+  
 
     
-    score = document.querySelector("#score");
     let currentScore = 0;
-    score.textContent = `Score: ${currentScore}`;
+    let lives = 3;
    
     
+ 
     
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
@@ -46,6 +46,15 @@ const ctx = canvas.getContext("2d");
           }
   };
 
+  function scoreBoard() {
+    ctx.fillStyle = "white";
+    ctx.font = "30px Arial";
+    ctx.fillText(`Lives: ${lives}`, 130, 30);
+
+    ctx.fillText(`score: ${currentScore}`, 300, 30);
+    
+  }
+
 
   function detectCollision() {
     bullets.forEach((bullet, bulletIndex) => {
@@ -58,7 +67,6 @@ const ctx = canvas.getContext("2d");
           asteroids.splice(asteroidIndex,1);
           if (lives > 0) {
           currentScore++;
-          score.textContent = `Score: ${currentScore}`;
           console.log(currentScore);
           };
         }
@@ -108,10 +116,11 @@ const ctx = canvas.getContext("2d");
 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    scoreBoard()
     drawPlayer();
     drawAsteroids();
     detectCollision();
-
+    
 
 
     if (lives > 0) {
@@ -136,9 +145,11 @@ const ctx = canvas.getContext("2d");
 
        if (distance < asteroidRadius + playerHeight / 2) {
             // Removes Asteroid from array
-           asteroids.splice(index, 1);
+           asteroids.splice(index, 1); 
+           if (lives > 0) {
            lives--
            console.log(`HIT: ${lives}`);
+           };
        }
       
 
