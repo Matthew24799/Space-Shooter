@@ -1,19 +1,26 @@
 const canvas = document.querySelector("#playArea");
 const ctx = canvas.getContext("2d");
-    let asteroids = []
+    let asteroids = [];
+    let bullets = [];
     const playerHeight = 45;
     const playerWidth = 43;
     let playerX = (canvas.width - playerWidth) / 2;
     let rightPressed = false;
     let leftPressed = false;
-   let asteroidRadius = 10;
+    let asteroidRadius = 10;
     let asteroidSpeed = 5;
     let spawnInterval = 1000;
+     
     let lives = 3;
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
 
-
+    document.addEventListener("keyup", event => {
+      if (event.code === "Space") {
+        shooting();
+        console.log("Space Pressed")
+      }
+    })
     
     function keyDownHandler(e) {
       if (e.key === "right" || e.key === "d") {
@@ -32,10 +39,20 @@ const ctx = canvas.getContext("2d");
   };
 
 
-  function bullet() {
-    ctx.rect(10, 20, 150, 100);
+  function drawBullet() {
+    bullets.forEach(bullet => {
+      ctx.fillStyle = "red";
+      ctx.fillRect(bullet.x, bullet.y, 10, 10);
+      
+    });
     
-  }
+  };
+
+  function shooting() {
+    let bulletX = playerX + playerWidth / 2 -2;
+    let bulletY = canvas.height - playerHeight -32;
+    bullets.push({ x: bulletX, y: bulletY });
+  };
  
     function spawnAsteroid() {
       let asteroidX = Math.random() * canvas.width;
@@ -66,8 +83,18 @@ const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPlayer();
     drawAsteroids();
-    bullet();
+
+    if (lives > 0) {
+    drawBullet();
     
+    bullets.forEach((bullet, bulletIndex) => {
+      bullet.y -= 5;
+
+      if (bullet.y < 0) {
+        bullets.splice(bulletIndex, 1);
+      };
+    })
+  };
     asteroids.forEach((asteroid, index) => {
         asteroid.y += asteroidSpeed;
 
