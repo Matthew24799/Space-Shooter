@@ -168,7 +168,19 @@ const ctx = canvas.getContext("2d");
 
     }
   }
+  if (lives === 0) {
+   gameOver();
+  }
     };
+
+
+    function gameOver() {
+      ctx.fillStyle = "white";
+      ctx.font = "50px ariel"; 
+      ctx.fillText("Game Over!", 170, 400); 
+    }
+
+    
     setInterval(spawnAsteroid, spawnInterval);
     setInterval(draw, 10);
 
