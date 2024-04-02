@@ -13,7 +13,7 @@ const ctx = canvas.getContext("2d");
     let spawnInterval = 1000; 
   
 
-    
+    let dead = false;
     let currentScore = 0;
     let lives = 3;
    
@@ -154,8 +154,12 @@ const ctx = canvas.getContext("2d");
       
     });       
 
+    if (lives === 0) {
+      gameOver();
+      lives === 0
+     }
 
-
+    
   if (rightPressed) {
     playerX += 7;
     if (playerX + playerWidth > canvas.width) {
@@ -168,19 +172,29 @@ const ctx = canvas.getContext("2d");
 
     }
   }
-  if (lives === 0) {
-   gameOver();
-  }
     };
+
+    
 
 
     function gameOver() {
+      dead == true;
       ctx.fillStyle = "white";
       ctx.font = "50px ariel"; 
       ctx.fillText("Game Over!", 170, 400); 
-    }
 
+      ctx.fillText("restarts soon :3", 150, 500);
+    }
     
+    setInterval(restart, 5000)
+    function restart() {
+    if (lives === 0) {
+      console.log("worked");
+      setTimeout(window.location.reload(), 3000);
+    
+   
+    }};
+
     setInterval(spawnAsteroid, spawnInterval);
     setInterval(draw, 10);
 
