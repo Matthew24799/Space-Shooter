@@ -3,7 +3,7 @@ const ctx = canvas.getContext("2d");
 
     const FxPlayerHit = new Audio("sounds/playerHit.wav");
     const FxExplosion = new Audio("sounds/Explosion.wav");
-    const FxShoot = new Audio("sounds/Shoot.wav");
+    const FxShoot = new Audio("https://github.com/Matthew24799/Space-Shooter/blob/main/sounds/Shoot.wav?raw=true");
     const FxHit = new Audio("sounds/Hit.wav");
     let asteroids = [];
     let bullets = [];
