@@ -1,6 +1,10 @@
 const canvas = document.querySelector("#playArea");
 const ctx = canvas.getContext("2d");
 
+    const FxPlayerHit = new Audio("sounds/playerHit.wav");
+    const FxExplosion = new Audio("sounds/Explosion.wav");
+    const FxShoot = new Audio("sounds/Shoot.wav");
+    const FxHit = new Audio("sounds/Hit.wav");
     let asteroids = [];
     let bullets = [];
     const playerHeight = 45;
@@ -24,7 +28,7 @@ const ctx = canvas.getContext("2d");
     let lives = 3;
    
     
- 
+    
     
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
@@ -32,6 +36,7 @@ const ctx = canvas.getContext("2d");
     document.addEventListener("keyup", event => {
       if (event.code === "Space") {
         shooting();
+        FxShoot.play();
       }
     })
     
@@ -69,6 +74,7 @@ const ctx = canvas.getContext("2d");
         const distanceY = bullet.y - asteroid.y;
         const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
         if ( distance < asteroidRadius + 5) {
+          FxHit.play();
           bullets.splice(bulletIndex,1);
           asteroids.splice(asteroidIndex,1);
 
@@ -113,6 +119,8 @@ const ctx = canvas.getContext("2d");
 
     function drawPlayer () { 
       if (lives > 0) {
+        
+
       ctx.strokeRect(playerX, 830, playerWidth, playerHeight);
       ctx.stroke();
       ctx.strokeStyle = "white";
@@ -157,6 +165,7 @@ const ctx = canvas.getContext("2d");
        const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
 
        if (distance < asteroidRadius + playerHeight / 2) {
+          FxPlayerHit.play();
             // Removes Asteroid from array
            asteroids.splice(index, 1); 
            if (lives > 0) {
