@@ -26,7 +26,6 @@ const ctx = canvas.getContext("2d");
     document.addEventListener("keyup", event => {
       if (event.code === "Space") {
         shooting();
-        console.log("Space Pressed")
       }
     })
     
@@ -69,6 +68,8 @@ const ctx = canvas.getContext("2d");
           currentScore++;
           console.log(currentScore);
           };
+
+          
         }
       })
     })
@@ -93,6 +94,7 @@ const ctx = canvas.getContext("2d");
       let asteroidX = Math.random() * canvas.width;
       let asteroidY = 0;
       asteroids.push({ x: asteroidX, y: asteroidY });
+
     }
 
     
@@ -122,7 +124,6 @@ const ctx = canvas.getContext("2d");
     detectCollision();
     
 
-
     if (lives > 0) {
     drawBullet();
     
@@ -148,15 +149,12 @@ const ctx = canvas.getContext("2d");
            asteroids.splice(index, 1); 
            if (lives > 0) {
            lives--
-           console.log(`HIT: ${lives}`);
            };
        }
       
-
-      
     });       
 
-     
+
 
   if (rightPressed) {
     playerX += 7;
@@ -171,7 +169,6 @@ const ctx = canvas.getContext("2d");
     }
   }
     };
-    
     setInterval(spawnAsteroid, spawnInterval);
     setInterval(draw, 10);
 
