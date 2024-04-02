@@ -11,9 +11,15 @@ const ctx = canvas.getContext("2d");
     let asteroidRadius = 10;
     let asteroidSpeed = 5;
     let spawnInterval = 1000; 
-  
 
-    let dead = false;
+    let scoreHigh;
+    const saveKey = "highScore"
+    let scoreStr = localStorage.getItem(saveKey)
+    if(scoreStr == null) {
+      scoreHigh = 0;
+    } else {
+      scoreHigh = parseInt(scoreStr)
+    }
     let currentScore = 0;
     let lives = 3;
    
@@ -48,10 +54,11 @@ const ctx = canvas.getContext("2d");
   function scoreBoard() {
     ctx.fillStyle = "white";
     ctx.font = "30px Arial";
-    ctx.fillText(`Lives: ${lives}`, 130, 30);
+    ctx.fillText(`Lives: ${lives}`, 40, 30);
 
-    ctx.fillText(`score: ${currentScore}`, 300, 30);
+    ctx.fillText(`score: ${currentScore}`, 440, 30);
     
+    ctx.fillText(`highScore: ${scoreHigh}`,190,30);
   }
 
 
@@ -64,11 +71,16 @@ const ctx = canvas.getContext("2d");
         if ( distance < asteroidRadius + 5) {
           bullets.splice(bulletIndex,1);
           asteroids.splice(asteroidIndex,1);
+
           if (lives > 0) {
           currentScore++;
           console.log(currentScore);
           };
 
+          if (currentScore > scoreHigh ) {
+            scoreHigh = currentScore;
+            localStorage.setItem(saveKey, scoreHigh);
+          };
           
         }
       })
@@ -178,7 +190,6 @@ const ctx = canvas.getContext("2d");
 
 
     function gameOver() {
-      dead == true;
       ctx.fillStyle = "white";
       ctx.font = "50px ariel"; 
       ctx.fillText("Game Over!", 170, 400); 
